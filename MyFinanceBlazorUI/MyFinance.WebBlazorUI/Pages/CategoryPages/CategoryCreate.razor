@@ -1,0 +1,25 @@
+﻿@page "/categories/create"
+
+@using MyFinance.WebBlazorUI.Models.CategoryDtos;
+@using MyFinance.Application.Categories.Commands.CreateCategory;
+@inject IMediator Mediator
+@inject IMapper Mapper
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create category</PageTitle>
+
+<h3>Create a new category:</h3>
+
+<EditForm Model="CreateCategoryDto" OnValidSubmit="HandleValidSubmitAsync">
+	<DataAnnotationsValidator />
+	<div>
+		<label for="name">Name</label>
+		<InputText id="name" @bind-Value="CreateCategoryDto.Name" class="form-control"></InputText>
+		<ValidationMessage For="() => CreateCategoryDto.Name" />
+	</div>
+	<br />
+	<button type="submit" class="btn btn-primary">Save</button>
+	<button type="reset" class="btn btn-outline-danger ms-3">Reset</button>
+</EditForm>
+<br />
+<a href="#" onclick="history.back()">Back</a>

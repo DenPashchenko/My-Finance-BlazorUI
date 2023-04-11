@@ -1,0 +1,102 @@
+﻿@page "/period_report"
+
+<PageTitle>Report for a period</PageTitle>
+
+@using MyFinance.Application.Reports.Queries.ReportForPeriod;
+@using MyFinance.Application.Transactions.Queries.GetTransactionList;
+@inject IMediator Mediator
+
+@if (ReportForPeriodVm == null)
+{
+	<h1>Report for a selected period</h1>
+	<br />
+	<EditForm EditContext="@EditContext" OnValidSubmit="HandleValidSubmitAsync">
+		<DataAnnotationsValidator />
+		<ValidationSummary />
+		<div class="col-sm-3">
+			<label for="startDate">Select a start date for reporting</label>
+			<InputDate id="startDate" @bind-Value="Model.StartDate" class="form-control" max="@DateTime.Today.ToString("yyyy-MM-dd")"></InputDate>
+		</div>
+		<br />
+		<div class="col-sm-3">
+			<label for="endDate">Select an end date for reporting</label>
+			<InputDate id="endDate" @bind-Value="Model.EndDate" class="form-control" max="@DateTime.Today.ToString("yyyy-MM-dd")"></InputDate>
+		</div>
+		<br />
+		<button type="submit" class="btn btn-primary">Get the report</button>
+	</EditForm>
+}
+else
+{
+	<h2>Report for the @ReportForPeriodVm.ForPeriod</h2>
+	<br />
+	<div class="row">
+		<div class="col-md-2 mx-auto">
+			<table class="table table-borderless">
+				<thead>
+					<tr>
+						<th>Total income</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="table-info border border-info text-end">@ReportForPeriodVm.TotalIncome</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-2 mx-auto">
+			<table class="table table-borderless">
+				<thead>
+					<tr>
+						<th>Total expenses</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="table-warning border border-warning text-end">@ReportForPeriodVm.TotalExpences</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<br />
+	<br />
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Transaction type</th>
+				<th>Category</th>
+				<th>Name</th>
+				<th>Description</th>
+				<th class="text-center">Sum</th>
+				<th>Created at</th>
+				<th>Edited at</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var transaction in ReportForPeriodVm.Transactions)
+			{
+				<tr>
+					<td><b><i>@transaction.TransactionType.ToString()</i></b></td>
+					<td>@transaction.Category</td>
+					<td>@transaction.Name</td>
+					<td>@transaction.Description</td>
+					<td class="text-end pe-4">@transaction.Sum</td>
+					<td>@transaction.DateOfCreation.ToShortDateString() <i>at @transaction.DateOfCreation.ToShortTimeString()</i></td>
+					@if (transaction.DateOfEditing.HasValue)
+					{
+						<td>@transaction.DateOfEditing.Value.ToShortDateString() <i>at @transaction.DateOfEditing.Value.ToShortTimeString()</i></td>
+					}
+					else
+					{
+						<td>@transaction.DateOfEditing.ToString()</td>
+					}
+				</tr>
+			}
+		</tbody>
+		<button type="button" class="btn btn-primary mt-3" @onclick="() => ReportForPeriodVm = null">New report</button>
+	</table>
+}
+<br />
+<a href="#" onclick="history.back()">Back</a>

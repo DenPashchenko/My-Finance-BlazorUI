@@ -1,0 +1,26 @@
+﻿@page "/categories/edit/{id:int}"
+
+<PageTitle>Edit category</PageTitle>
+
+@using MyFinance.Application.Categories.Commands.UpdateCategory;
+@using MyFinance.Application.Categories.Queries.GetCategoryById;
+@using MyFinance.WebBlazorUI.Models.CategoryDtos;
+@inject IMediator Mediator
+@inject IMapper Mapper
+@inject NavigationManager NavigationManager
+
+<h3>Edit the "@CategoryVm.Name" category:</h3>
+
+<EditForm Model="updateCategoryDto" OnValidSubmit="HandleValidSubmitAsync">
+	<DataAnnotationsValidator />
+	<div>
+		<label for="name">Name</label>
+		<InputText id="name" @bind-Value="updateCategoryDto.Name" class="form-control"></InputText>
+		<ValidationMessage For="() => updateCategoryDto.Name" />
+	</div>
+	<br />
+	<button type="submit" class="btn btn-primary">Update</button>
+	<button type="reset" class="btn btn-outline-danger ms-3">Reset</button>
+</EditForm>
+<br />
+<a href="#" onclick="history.back()">Back</a>

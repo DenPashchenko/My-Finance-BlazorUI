@@ -1,0 +1,60 @@
+﻿@page "/transactions/edit/{id:int}"
+
+<PageTitle>Edit transaction</PageTitle>
+
+@using MyFinance.Application.Categories.Queries.GetCategoryList;
+@using MyFinance.Application.Transactions.Commands.UpdateTransaction;
+@using MyFinance.Application.Transactions.Queries.GetTransactionById;
+@using MyFinance.Domain.Enums;
+@using MyFinance.WebBlazorUI.Models.TransactionDtos;
+@inject IMediator Mediator
+@inject IMapper Mapper
+@inject NavigationManager NavigationManager
+
+<h3>Edit the "@TransactionVm.Name" transaction:</h3>
+<br />
+<EditForm Model="updateTransactionDto" OnValidSubmit="HandleValidSubmitAsync">
+	<DataAnnotationsValidator />
+	<div class="form-group">
+		<label class="form-label" for="transactionType">Transaction type</label>
+		<InputSelect class="form-select" id="transactionType" @bind-Value="updateTransactionDto.TransactionType">
+			@foreach (var transactionType in Enum.GetValues(typeof(TransactionType)))
+			{
+				<option value="@transactionType">@transactionType</option>
+			}
+		</InputSelect>
+	</div>
+	<br />
+	<div class="form-group">
+		<label class="form-label" for="category">Category</label>
+		<InputSelect class="form-select" id="category" @bind-Value="updateTransactionDto.CategoryId">
+			@foreach (var category in categories)
+			{
+				<option value="@category.Id">@category.Name</option>
+			}
+		</InputSelect>
+	</div>
+	<br />
+	<div>
+		<label for="name">Name</label>
+		<InputText id="name" @bind-Value="updateTransactionDto.Name" class="form-control"></InputText>
+		<ValidationMessage For="() => updateTransactionDto.Name" />
+	</div>
+	<br />
+	<div>
+		<label for="description">Description</label>
+		<InputTextArea id="description" @bind-Value="updateTransactionDto.Description" class="form-control"></InputTextArea>
+		<ValidationMessage For="() => updateTransactionDto.Description" />
+	</div>
+	<br />
+	<div>
+		<label for="sum">Sum</label>
+		<InputNumber id="sum" @bind-Value="updateTransactionDto.Sum" class="form-control"></InputNumber>
+		<ValidationMessage For="() => updateTransactionDto.Sum" />
+	</div>
+	<br />
+	<button type="submit" class="btn btn-primary">Update</button>
+	<button type="reset" class="btn btn-outline-danger ms-3">Reset</button>
+</EditForm>
+<br />
+<a href="#" onclick="history.back()">Back</a>

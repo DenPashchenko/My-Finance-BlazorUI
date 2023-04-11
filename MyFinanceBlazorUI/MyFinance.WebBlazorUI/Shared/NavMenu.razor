@@ -1,0 +1,42 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="">MyFinance.Web</a>
+		<button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+	<nav class="flex-column">
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+				<span class="oi oi-home" aria-hidden="true"></span> Home
+			</NavLink>
+		</div>
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" @onclick="() => expandSubMenu = !expandSubMenu">
+				<span class="oi oi-bar-chart" aria-hidden="true"></span> Reports
+			</NavLink>
+			@if (expandSubMenu)
+			{
+				<NavLink class="nav-link ms-4" href="date_report" @onclick="() => expandSubMenu = !expandSubMenu">
+					<span class="bi bi-calendar-date" style="font-size: 1.25rem; margin-right: 0.5rem;" aria-hidden="true"></span> Report for a day
+				</NavLink>
+				<NavLink class="nav-link ms-4" href="period_report" @onclick="() => expandSubMenu = !expandSubMenu">
+					<span class="bi bi-calendar3" style="font-size: 1.25rem; margin-right: 0.5rem;" aria-hidden="true"></span> Report for a period
+				</NavLink>
+			}
+		</div>
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="transactions">
+				<span class="oi oi-dollar" aria-hidden="true"></span> Transactions
+			</NavLink>
+		</div>
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="categories">
+				<span class="oi oi-tags" aria-hidden="true"></span> Categories
+			</NavLink>
+		</div>
+	</nav>
+</div>
