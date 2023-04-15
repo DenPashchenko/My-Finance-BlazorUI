@@ -6,11 +6,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using MyFinance.Application.Transactions.Queries.GetTransactionList;
 using MyFinance.WebBlazorUI.Pages;
+using System.Globalization;
 
 namespace MyFinance.UnitTests.PagesTests.Transactions
 {
 	public class TransactionsPageTests
 	{
+		public static readonly string decimalSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
 		private readonly TestContext _testContext;
 		private readonly Mock<IMediator> _mockMediator;
 		private readonly IRenderedComponent<WebBlazorUI.Pages.TransactionPages.Transactions> _page;
@@ -103,7 +105,7 @@ namespace MyFinance.UnitTests.PagesTests.Transactions
 				c => Assert.Equal("Category1", c.TextContent),
 				c => Assert.Equal("Transaction1", c.TextContent),
 				c => Assert.Equal("Description1", c.TextContent),
-				c => Assert.Equal("10,10", c.TextContent),
+				c => Assert.Equal($"10{decimalSeparator}10", c.TextContent),
 				c => Assert.Equal(DateTime.Now.ToShortDateString() + " at " + DateTime.Now.ToShortTimeString(), c.TextContent),
 				c => Assert.Equal(string.Empty, c.TextContent),
 				c => Assert.Equal(3, c.ChildElementCount), // 3 buttons
@@ -112,7 +114,7 @@ namespace MyFinance.UnitTests.PagesTests.Transactions
 				c => Assert.Equal("Category2", c.TextContent),
 				c => Assert.Equal("Transaction2", c.TextContent),
 				c => Assert.Equal("Description2", c.TextContent),
-				c => Assert.Equal("20,20", c.TextContent),
+				c => Assert.Equal($"20{decimalSeparator}20", c.TextContent),
 				c => Assert.Equal(DateTime.Now.ToShortDateString() + " at " + DateTime.Now.ToShortTimeString(), c.TextContent),
 				c => Assert.Equal(string.Empty, c.TextContent),
 				c => Assert.Equal(3, c.ChildElementCount) // 3 buttons

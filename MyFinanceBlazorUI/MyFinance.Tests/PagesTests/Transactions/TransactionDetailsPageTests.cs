@@ -5,11 +5,13 @@ using Moq;
 using Microsoft.Extensions.DependencyInjection;
 using MyFinance.Application.Transactions.Queries.GetTransactionById;
 using MyFinance.WebBlazorUI.Pages.TransactionPages;
+using System.Globalization;
 
 namespace MyFinance.UnitTests.PagesTests.Transactions
 {
 	public class TransactionDetailsPageTests
 	{
+		public static readonly string decimalSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
 		private readonly TestContext _testContext;
 		private readonly Mock<IMediator> _mockMediator;
 		private readonly IRenderedComponent<TransactionDetails> _page;
@@ -68,7 +70,7 @@ namespace MyFinance.UnitTests.PagesTests.Transactions
 				c => Assert.Equal("Category1", c.TextContent),
 				c => Assert.Equal("Transaction1", c.TextContent),
 				c => Assert.Equal("Description1", c.TextContent),
-				c => Assert.Equal("10,10", c.TextContent),
+				c => Assert.Equal($"10{decimalSeparator}10", c.TextContent),
 				c => Assert.Equal(DateTime.Now.ToShortDateString() + " at " + DateTime.Now.ToShortTimeString(), c.TextContent),
 				c => Assert.Equal(string.Empty, c.TextContent)
 			);
