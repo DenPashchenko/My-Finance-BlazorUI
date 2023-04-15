@@ -1,0 +1,25 @@
+﻿@page "/categories/details/{id:int}"
+
+<PageTitle>Category details</PageTitle>
+
+@using MyFinance.Application.Categories.Queries.GetCategoryById;
+@inject IMediator Mediator
+@inject NavigationManager NavigationManager
+
+<h3>The "@CategoryVm.Name" details:</h3>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>@CategoryVm.Name</td>
+		</tr>
+	</tbody>
+	<button type="button" class="btn btn-primary mt-3" @onclick="(() => EditCategory(CategoryVm.Id))">Edit</button>
+</table>
+<br />
+<a href="#" onclick="history.back()">Back</a>

@@ -1,0 +1,36 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment env
+
+<PageTitle>MyFinance.Web</PageTitle>
+
+<div class="page">
+	<div class="sidebar">
+		<NavMenu />
+	</div>
+
+	<main>
+		<div class="top-row px-4">
+			<a href="/about">About</a>
+		</div>
+
+		<article class="content px-4">
+			<ErrorBoundary @ref="errorBoundary">
+				<ChildContent>
+					@Body
+				</ChildContent>
+				<ErrorContent Context="Exception">
+					<div class="alert-danger">
+						@if (env.IsDevelopment())
+						{
+							<h4>@Exception.GetType().Name</h4>
+						}
+						<h4>@Exception.Message</h4>
+					</div>
+					<br />
+					<button class="btn btn-info" @onclick="() => RedirectToHome()">Restart</button>
+				</ErrorContent>
+			</ErrorBoundary>
+		</article>
+	</main>
+</div>

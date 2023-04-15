@@ -1,0 +1,59 @@
+﻿@page "/transactions/create"
+
+<PageTitle>Create transaction</PageTitle>
+
+@using MyFinance.Application.Categories.Queries.GetCategoryList;
+@using MyFinance.Application.Transactions.Commands.CreateTransaction;
+@using MyFinance.Domain.Enums;
+@using MyFinance.WebBlazorUI.Models.TransactionDtos;
+@inject IMediator Mediator
+@inject IMapper Mapper
+@inject NavigationManager NavigationManager
+
+<h3>Create a new transaction:</h3>
+<br />
+<EditForm Model="CreateTransactionDto" OnValidSubmit="HandleValidSubmitAsync">
+	<DataAnnotationsValidator />
+	<div class="form-group">
+		<label class="form-label" for="transactionType">Transaction type</label>
+		<InputSelect class="form-select" id="transactionType" @bind-Value="CreateTransactionDto.TransactionType">
+			@foreach (var transactionType in Enum.GetValues(typeof(TransactionType)))
+			{
+				<option value="@transactionType">@transactionType</option>
+			}
+		</InputSelect>
+	</div>
+	<br />
+	<div class="form-group">
+		<label class="form-label" for="category">Category</label>
+		<InputSelect class="form-select" id="category" @bind-Value="CreateTransactionDto.CategoryId">
+			@foreach (var category in categories)
+			{
+				<option value="@category.Id">@category.Name</option>
+			}
+		</InputSelect>
+	</div>
+	<br />
+	<div>
+		<label for="name">Name</label>
+		<InputText id="name" @bind-Value="CreateTransactionDto.Name" class="form-control"></InputText>
+		<ValidationMessage For="() => CreateTransactionDto.Name" />
+	</div>
+	<br />
+	<div>
+		<label for="description">Description</label>
+		<InputTextArea id="description" @bind-Value="CreateTransactionDto.Description" class="form-control"></InputTextArea>
+		<ValidationMessage For="() => CreateTransactionDto.Description" />
+	</div>
+	<br />
+	<div>
+		<label for="sum">Sum</label>
+		<InputNumber id="sum" @bind-Value="CreateTransactionDto.Sum" class="form-control"></InputNumber>
+		<ValidationMessage For="() => CreateTransactionDto.Sum" />
+	</div>
+	<br />
+	<button type="submit" class="btn btn-primary">Save</button>
+	<button type="reset" class="btn btn-outline-danger ms-3">Reset</button>
+</EditForm>
+<br />
+<a href="#" onclick="history.back()">Back</a>

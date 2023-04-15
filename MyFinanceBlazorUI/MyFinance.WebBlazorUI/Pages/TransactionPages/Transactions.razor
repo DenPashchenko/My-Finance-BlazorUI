@@ -1,0 +1,65 @@
+﻿@page "/transactions"
+
+<PageTitle>Transactions</PageTitle>
+
+@using MyFinance.Application.Transactions.Queries.GetTransactionList;
+@inject IMediator Mediator
+@inject NavigationManager NavigationManager
+
+<h1>Transactions</h1>
+
+@if (TransactionListVm == null)
+{
+	<p><em>Loading...</em></p>
+}
+else
+{
+	<button class="btn btn-info my-3" @onclick="CreateTransaction">Create a new transaction</button>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Transaction type</th>
+				<th>Category</th>
+				<th>Name</th>
+				<th>Description</th>
+				<th class="text-center">Sum</th>
+				<th>Created at</th>
+				<th>Edited at</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var transaction in transactions)
+			{
+				<tr>
+					<td><b><i>@transaction.TransactionType.ToString()</i></b></td>
+					<td>@transaction.Category</td>
+					<td>@transaction.Name</td>
+					<td>@transaction.Description</td>
+					<td class="text-end pe-4">@transaction.Sum</td>
+					<td>@transaction.DateOfCreation.ToShortDateString() <i>at @transaction.DateOfCreation.ToShortTimeString()</i></td>
+					@if (transaction.DateOfEditing.HasValue)
+					{
+						<td>@transaction.DateOfEditing.Value.ToShortDateString() <i>at @transaction.DateOfEditing.Value.ToShortTimeString()</i></td>
+					}
+					else
+					{
+						<td>@transaction.DateOfEditing.ToString()</td>
+					}
+					<td>
+						<button class="btn btn-outline-primary ms-4 mx-2" @onclick="(() => ShowTransaction(transaction.Id))">
+							<span class="bi bi-zoom-in"></span>
+						</button>
+						<button class="btn btn-outline-primary mx-2" @onclick="(() => EditTransaction(transaction.Id))">
+							<span class="bi bi-pencil"></span>
+						</button>
+						<button class="btn btn-outline-danger mx-2" @onclick="(() => DeleteTransaction(transaction.Id))">
+							<span class="bi bi-trash"></span>
+						</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	<br />
+	<a href="#" onclick="history.back()">Back</a>
+}

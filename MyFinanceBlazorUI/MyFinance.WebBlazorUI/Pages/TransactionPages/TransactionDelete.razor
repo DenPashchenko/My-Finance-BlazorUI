@@ -1,0 +1,46 @@
+﻿@page "/transactions/delete/{id:int}"
+
+<PageTitle>Delete transaction</PageTitle>
+
+@using MyFinance.Application.Transactions.Commands.DeleteTransaction;
+@using MyFinance.Application.Transactions.Queries.GetTransactionById;
+@inject IMediator Mediator
+@inject NavigationManager NavigationManager
+
+<h3>Are you sure you want to <b>delete</b> the "@TransactionVm.Name"?</h3>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>TransactionType</th>
+			<th>Category</th>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Sum</th>
+			<th>DateOfCreation</th>
+			<th>DateOfEditing</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><b>@TransactionVm.TransactionType.ToString()</b></td>
+			<td>@TransactionVm.Category</td>
+			<td>@TransactionVm.Name</td>
+			<td>@TransactionVm.Description</td>
+			<td>@TransactionVm.Sum</td>
+			<td>@TransactionVm.DateOfCreation.ToShortDateString() <i>at @TransactionVm.DateOfCreation.ToShortTimeString()</i></td>
+			@if (TransactionVm.DateOfEditing.HasValue)
+			{
+				<td>@TransactionVm.DateOfEditing.Value.ToShortDateString() <i>at @TransactionVm.DateOfEditing.Value.ToShortTimeString()</i></td>
+			}
+			else
+			{
+				<td>@TransactionVm.DateOfEditing.ToString()</td>
+			}
+		</tr>
+	</tbody>
+	<button type="button" class="btn btn-danger mt-3" @onclick="DeleteTransactionAsync">Delete</button>
+</table>
+<br />
+<a href="#" onclick="history.back()">Back</a>
+

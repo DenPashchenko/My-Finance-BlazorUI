@@ -1,0 +1,26 @@
+﻿@page "/categories/delete/{id:int}"
+
+<PageTitle>Delete category</PageTitle>
+
+@using MyFinance.Application.Categories.Commands.DeleteCategory;
+@using MyFinance.Application.Categories.Queries.GetCategoryById;
+@inject IMediator Mediator
+@inject NavigationManager NavigationManager
+
+<h3>Are you sure you want to <b>delete</b> the "@CategoryVm.Name"?</h3>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>@CategoryVm.Name</td>
+		</tr>
+	</tbody>
+	<button type="button" class="btn btn-danger mt-3" @onclick="DeleteCategoryAsync">Delete</button>
+</table>
+<br />
+<a href="#" onclick="history.back()">Back</a>
