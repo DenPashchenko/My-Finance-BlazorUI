@@ -1,12 +1,21 @@
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using MyFinance.Application.Common.Mappings;
 using MyFinance.Application.Interfaces;
 using MyFinance.Persistence;
+using System.Globalization;
 using System.Reflection;
 
-var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture("uk-UA");
-
 var builder = WebApplication.CreateBuilder(args);
+
+var defaultCulture = builder.Configuration.GetSection("Localization").GetValue<string>("DefaultCulture");
+var localizationOptions = new RequestLocalizationOptions()
+{
+	SupportedCultures = new List<CultureInfo> { new CultureInfo(defaultCulture) },
+	SupportedUICultures = new List<CultureInfo> { new CultureInfo(defaultCulture) },
+	DefaultRequestCulture = new RequestCulture(defaultCulture)
+};
 
 builder.Services.AddDbContext<DataDbContext>(options =>
 {
