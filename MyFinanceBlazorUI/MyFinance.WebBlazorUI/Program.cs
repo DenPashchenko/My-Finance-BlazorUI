@@ -4,6 +4,8 @@ using MyFinance.Application.Interfaces;
 using MyFinance.Persistence;
 using System.Reflection;
 
+var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture("uk-UA");
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<DataDbContext>(options =>
@@ -27,6 +29,7 @@ builder.Services.AddServerSideBlazor();
 
 var app = builder.Build();
 
+app.UseRequestLocalization(localizationOptions);
 if (!app.Environment.IsDevelopment())
 {
 	app.UseExceptionHandler("/Error");
