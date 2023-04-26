@@ -34,7 +34,7 @@ else
 					<td><b><i>@transaction.TransactionType.ToString()</i></b></td>
 					<td>@transaction.Category</td>
 					<td>@transaction.Name</td>
-					<td>@transaction.Description</td>
+					<td style="max-width: 150px">@transaction.Description</td>
 					<td class="text-end pe-4">@transaction.Sum</td>
 					<td>@transaction.DateOfCreation.ToShortDateString() <i>at @transaction.DateOfCreation.ToShortTimeString()</i></td>
 					@if (transaction.DateOfEditing.HasValue)
