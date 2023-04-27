@@ -1,8 +1,8 @@
-# Task 13
+# MyFinance
 
-## MyFinance (BlazorUI)
+## BlazorUI
 
-MyFinance is a .Net Core Blazor server-side application for managing self finance.
+MyFinance is a .Net Core Blazor server-side application for managing personal finance.
 
 It has such features:
 * CRUD for 'Categories' list of types for income and expenses (e.g. salary, utilities, travelling, etc.).
