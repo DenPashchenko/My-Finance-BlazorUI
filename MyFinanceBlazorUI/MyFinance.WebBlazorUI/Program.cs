@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using MyFinance.Application.Common.Mappings;
 using MyFinance.Application.Interfaces;
 using MyFinance.Persistence;
